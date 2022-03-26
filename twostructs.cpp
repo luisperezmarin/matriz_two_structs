@@ -75,6 +75,44 @@ void insertar(int columna, int dato)
     }
 }
 
+void insertar2(int columna, int dato)
+{
+    // Definicion de variables tipo nodo y nodo2
+    nodo *col = new nodo;
+    nodo2 *num = new nodo2;
+
+    // Asignacion de valores a las variables para crear el nodo
+    col->columna = columna;
+    col->siguiente = NULL;
+    col->abajo = NULL;
+
+    if (inicio == NULL){
+        cout << "Nodo vacio Insertando Columna " << columna << " y dato " << dato << endl;
+        num->dato = dato;
+        num->abajo = NULL;
+        col->abajo = num;
+        inicio = col;
+    } else {
+        nodo *aux = inicio;
+        nodo2 *aux2;
+        while (aux != NULL)
+        {
+            if (aux->columna == columna)
+            {
+                aux2 = aux->abajo;
+                cout << "Ya existe una columna " << columna << " Insertando dato " << dato << endl;
+                while (aux2->abajo != NULL)
+                {
+                    aux2 = aux2->abajo;
+                }
+                aux2->abajo = num;
+                return;
+            }
+            aux = aux->siguiente;
+        }
+    }
+}
+
 void imprimir()
 {
     nodo *aux = inicio;
