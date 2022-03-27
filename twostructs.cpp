@@ -1,4 +1,5 @@
 #include <iostream>
+#include <conio.h>
 
 using namespace std;
 
@@ -125,6 +126,7 @@ void menu(){
     int columna;
     int dato;
     do{
+        system("cls");
         cout << "1. Insertar" << endl;
         cout << "2. Imprimir" << endl;
         cout << "3. Eliminar Todo" << endl;
@@ -139,21 +141,25 @@ void menu(){
             cin >> dato;
             insertar(columna, dato);
             cout << "Se inserto correctamente" << endl;
+            getche();
             break;
         case 2:
             cout << "Imprimiendo Matriz..." << endl;
             imprimir();
             cout << "Imprimiendo Matriz... Terminado" << endl;
+            getche();
             break;
         case 3:
             cout << "Eliminando Matriz..." << endl;
             eliminarTodo();
             cout << "Eliminando Matriz... Terminado" << endl;
+            getche();
             break;
         case 4:
             break;
         default:
             cout << "Opcion no valida" << endl;
+            getche();
             break;
         }
     } while (opcion != 4);
