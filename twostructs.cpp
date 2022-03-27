@@ -92,23 +92,31 @@ void insertar2(int columna, int dato)
         num->abajo = NULL;
         col->abajo = num;
         inicio = col;
+        cout << inicio->columna << "->" << inicio->abajo->dato << endl;
+        if (0 == NULL)
+            cout << "Inicio->Siguiente: " << inicio->siguiente << " -> Inicio->Abajo->Abajo: " << inicio->abajo->abajo << endl;
+        
     } else {
         nodo *aux = inicio;
-        nodo2 *aux2;
-        while (aux != NULL)
-        {
-            if (aux->columna == columna)
+        nodo2 *aux2 = aux->abajo;
+        cout << "Columna Inicial: "<< aux->columna << " Columna Siguiente: ";
+        if (aux->siguiente == NULL){
+            cout << aux->siguiente << " Dato Inicial: " << aux2->dato;
+            if (aux2->abajo == NULL)
+                cout << " Dato Abajo: " << aux2->abajo << endl;
+        } else {
+            cout << aux->siguiente->columna << " Dato Inicial: " << aux2->dato;
+            if (aux2->abajo == NULL)
+                cout << " Dato Abajo: " << aux2->abajo << endl;
+        }
+        if (columna == aux->columna){
+            cout << "Ya existe una columna " << columna << " Insertando dato " << dato << endl;
+            while (aux2->abajo != NULL)
             {
-                aux2 = aux->abajo;
-                cout << "Ya existe una columna " << columna << " Insertando dato " << dato << endl;
-                while (aux2->abajo != NULL)
-                {
-                    aux2 = aux2->abajo;
-                }
-                aux2->abajo = num;
-                return;
+                aux2 = aux2->abajo;
             }
-            aux = aux->siguiente;
+            aux2->abajo = num;
+            return;
         }
     }
 }
@@ -141,6 +149,24 @@ void imprimirColumna(int columna)
     }
 }
 
+void eliminarTodo(){
+    nodo *aux = inicio;
+    nodo2 *aux2;
+    while (aux != NULL)
+    {
+        inicio = inicio->siguiente;
+        aux2 = aux->abajo;
+        while (aux2 != NULL)
+        {
+            aux->abajo = aux->abajo->abajo;
+            delete(aux2);
+            aux2 = aux->abajo;
+        }
+        delete (aux);
+        aux = inicio;
+    }
+}
+
 int main()
 {
     int dato, columna;
@@ -154,11 +180,13 @@ int main()
     insertar(1, 1);
     insertar(1, 2);
     insertar(1, 3);
+    eliminarTodo();
     insertar(2, 100);
     insertar(2, 2);
     insertar(3, 1);
 
     cout << "Imprimiendo ..." << endl;
     imprimir();
+
     return 0;
 }
