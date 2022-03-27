@@ -80,6 +80,7 @@ void insertar(int columna, int dato)
     }
 }
 
+// Funcion para imprimir la matriz
 void imprimir()
 {
     nodo *aux = inicio;
@@ -103,6 +104,7 @@ void imprimir()
     }
 }
 
+// Funcion para eliminar todo
 void eliminarTodo(){
     nodo *aux = inicio;
     nodo2 *aux2;
@@ -121,6 +123,7 @@ void eliminarTodo(){
     }
 }
 
+// Funcion para mostrar el menu
 void menu(){
     int opcion;
     int columna;
