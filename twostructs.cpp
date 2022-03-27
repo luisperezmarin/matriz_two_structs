@@ -2,14 +2,20 @@
 
 using namespace std;
 
+
+// Prototipos de las funciones y estructuras
 struct nodo;
 struct nodo2;
 
 void insertar(int dato);
 void imprimir();
+void eliminarTodo();
+void menu();
 
+// Variables globales
 nodo *inicio;
 
+// Estructura de nodo
 struct nodo
 {
     int columna;
@@ -17,6 +23,7 @@ struct nodo
     nodo2 *abajo;
 };
 
+// Estructura de nodo2
 struct nodo2
 {
     int dato;
@@ -26,24 +33,23 @@ struct nodo2
 void insertar(int columna, int dato)
 {
     // Definicion de variables tipo nodo y nodo2
-    nodo *col = new nodo;
-    nodo2 *num = new nodo2;
+    nodo *col_aux = new nodo;
+    nodo2 *valor = new nodo2;
 
     // Asignacion de valores a las variables para crear el nodo
-    col->columna = columna;
-    col->siguiente = NULL;
-    col->abajo = NULL;
+    col_aux->columna = columna;
+    col_aux->siguiente = NULL;
+    col_aux->abajo = NULL;
 
 
-    num->dato = dato;
-    num->abajo = NULL;
+    valor->dato = dato;
+    valor->abajo = NULL;
 
     // Verificacion de que el nodo este vacio
     if (inicio == NULL)
     {
-        cout << "Nodo vacio Insertando Columna " << columna << " y dato " << dato << endl;
-        col->abajo = num;
-        inicio = col;
+        col_aux->abajo = valor;
+        inicio = col_aux;
     }
     else
     {
@@ -54,70 +60,22 @@ void insertar(int columna, int dato)
             if (aux->columna == columna)
             {
                 aux2 = aux->abajo;
-                cout << "Ya existe una columna " << columna << " Insertando dato " << dato << endl;
                 while (aux2->abajo != NULL)
                 {
                     aux2 = aux2->abajo;
                 }
-                aux2->abajo = num;
+                aux2->abajo = valor;
                 return;
             }
             aux = aux->siguiente;
         }
-        cout << "Nueva columna " << columna << " Insertando dato " << dato << endl;
-        col->abajo = num;
+        col_aux->abajo = valor;
         aux = inicio;
         while (aux->siguiente != NULL)
         {
             aux = aux->siguiente;
         }
-        aux->siguiente = col;
-    }
-}
-
-void insertar2(int columna, int dato)
-{
-    // Definicion de variables tipo nodo y nodo2
-    nodo *col = new nodo;
-    nodo2 *num = new nodo2;
-
-    // Asignacion de valores a las variables para crear el nodo
-    col->columna = columna;
-    col->siguiente = NULL;
-    col->abajo = NULL;
-
-    if (inicio == NULL){
-        cout << "Nodo vacio Insertando Columna " << columna << " y dato " << dato << endl;
-        num->dato = dato;
-        num->abajo = NULL;
-        col->abajo = num;
-        inicio = col;
-        cout << inicio->columna << "->" << inicio->abajo->dato << endl;
-        if (0 == NULL)
-            cout << "Inicio->Siguiente: " << inicio->siguiente << " -> Inicio->Abajo->Abajo: " << inicio->abajo->abajo << endl;
-        
-    } else {
-        nodo *aux = inicio;
-        nodo2 *aux2 = aux->abajo;
-        cout << "Columna Inicial: "<< aux->columna << " Columna Siguiente: ";
-        if (aux->siguiente == NULL){
-            cout << aux->siguiente << " Dato Inicial: " << aux2->dato;
-            if (aux2->abajo == NULL)
-                cout << " Dato Abajo: " << aux2->abajo << endl;
-        } else {
-            cout << aux->siguiente->columna << " Dato Inicial: " << aux2->dato;
-            if (aux2->abajo == NULL)
-                cout << " Dato Abajo: " << aux2->abajo << endl;
-        }
-        if (columna == aux->columna){
-            cout << "Ya existe una columna " << columna << " Insertando dato " << dato << endl;
-            while (aux2->abajo != NULL)
-            {
-                aux2 = aux2->abajo;
-            }
-            aux2->abajo = num;
-            return;
-        }
+        aux->siguiente = col_aux;
     }
 }
 
@@ -125,27 +83,22 @@ void imprimir()
 {
     nodo *aux = inicio;
     nodo2 *aux2;
+    if (aux == NULL){
+        cout << "No hay datos" << endl;
+        return;
+    }
+
     while (aux != NULL)
     {
-        cout << "Columna: " << aux->columna << endl;
+        cout << "Columna: " << aux->columna << "-> ";
         aux2 = aux->abajo;
         while (aux2 != NULL)
         {
-            cout << "Dato: " << aux2->dato << endl;
+            cout << aux2->dato << ",";
             aux2 = aux2->abajo;
         }
         aux = aux->siguiente;
-    }
-}
-
-void imprimirColumna(int columna)
-{
-    nodo *aux = inicio;
-    nodo2 *aux2;
-    while (aux != NULL)
-    {
-        cout << "Columna: " << aux->columna << endl;
-        aux = aux->siguiente;
+        cout << endl;
     }
 }
 
@@ -167,26 +120,47 @@ void eliminarTodo(){
     }
 }
 
+void menu(){
+    int opcion;
+    int columna;
+    int dato;
+    do{
+        cout << "1. Insertar" << endl;
+        cout << "2. Imprimir" << endl;
+        cout << "3. Eliminar Todo" << endl;
+        cout << "4. Salir" << endl;
+        cin >> opcion;
+        switch (opcion)
+        {
+        case 1:
+            cout << "Ingrese la columna: ";
+            cin >> columna;
+            cout << "Ingrese el dato: ";
+            cin >> dato;
+            insertar(columna, dato);
+            cout << "Se inserto correctamente" << endl;
+            break;
+        case 2:
+            cout << "Imprimiendo Matriz..." << endl;
+            imprimir();
+            cout << "Imprimiendo Matriz... Terminado" << endl;
+            break;
+        case 3:
+            cout << "Eliminando Matriz..." << endl;
+            eliminarTodo();
+            cout << "Eliminando Matriz... Terminado" << endl;
+            break;
+        case 4:
+            break;
+        default:
+            cout << "Opcion no valida" << endl;
+            break;
+        }
+    } while (opcion != 4);
+}
+
 int main()
 {
-    int dato, columna;
-    /*    cout << "Ingrese la columna: ";
-        cin >> columna;
-        cout << "Ingrese el dato a insertar: ";
-        cin >> dato;
-        cout << "La columna es: " << columna << endl;
-        cout << "El dato es: " << dato << endl;
-    */
-    insertar(1, 1);
-    insertar(1, 2);
-    insertar(1, 3);
-    eliminarTodo();
-    insertar(2, 100);
-    insertar(2, 2);
-    insertar(3, 1);
-
-    cout << "Imprimiendo ..." << endl;
-    imprimir();
-
+    menu();
     return 0;
 }
